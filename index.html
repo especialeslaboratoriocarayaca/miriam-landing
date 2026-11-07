@@ -53,22 +53,22 @@
         <p>Iniciando servidores de laboratorio y seguridad. Un momento por favor.</p>
     </div>
 
-    <script>
-        // ⚠️ PEGA AQUÍ LA URL REAL DE TU BACKEND EN RENDER (sin barra al final)
+<script>
+        // ⚠️ Tu URL real de Render (ejemplo)
         const BACKEND_URL = "https://tu-backend-en-render.onrender.com"; 
         
-        // ⚠️ RUTA A TU APLICACIÓN PRINCIPAL (o el panel de bienvenida)
-        const APP_MAIN_URL = "https://tu-frontend-principal.com"; 
+        // ⚠️ Como tu backend sirve la app, apunta a la misma URL para entrar al sistema al despertar
+        const APP_MAIN_URL = BACKEND_URL; 
 
         async function checkServer() {
             try {
                 const response = await fetch(`${BACKEND_URL}/health`, { method: 'GET' });
                 if (response.ok) {
-                    // El servidor despertó, redirigimos de inmediato al sistema
+                    // El servidor despertó, redirigimos de inmediato al sistema principal
                     window.location.href = APP_MAIN_URL;
                 }
             } catch (error) {
-                // El servidor sigue durmiendo, seguimos esperando en el bucle
+                // El servidor sigue durmiendo, seguimos esperando con el GIF en pantalla
                 console.log("Servidor despertando...");
             }
         }
