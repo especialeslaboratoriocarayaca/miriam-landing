@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciando - Miriam Plataforma</title>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            max-width: 450px;
+            padding: 30px;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        img {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #38bdf8;
+        }
+        p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Reemplaza 'intro-logos.gif' con el nombre exacto de tu archivo GIF -->
+        <img src="intro-logos.gif" alt="Cargando sistema...">
+        <h2>Despertando el sistema...</h2>
+        <p>Iniciando servidores de laboratorio y seguridad. Un momento por favor.</p>
+    </div>
+
+    <script>
+        // ⚠️ PEGA AQUÍ LA URL REAL DE TU BACKEND EN RENDER (sin barra al final)
+        const BACKEND_URL = "https://tu-backend-en-render.onrender.com"; 
+        
+        // ⚠️ RUTA A TU APLICACIÓN PRINCIPAL (o el panel de bienvenida)
+        const APP_MAIN_URL = "https://tu-frontend-principal.com"; 
+
+        async function checkServer() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`, { method: 'GET' });
+                if (response.ok) {
+                    // El servidor despertó, redirigimos de inmediato al sistema
+                    window.location.href = APP_MAIN_URL;
+                }
+            } catch (error) {
+                // El servidor sigue durmiendo, seguimos esperando en el bucle
+                console.log("Servidor despertando...");
+            }
+        }
+
+        // Sondear el servidor cada 3 segundos
+        setInterval(checkServer, 3000);
+        
+        // Primera comprobación al abrir la página
+        checkServer();
+    </script>
+</body>
+</html>
