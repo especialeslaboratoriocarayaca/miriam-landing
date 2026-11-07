@@ -19,64 +19,95 @@
         }
         .container {
             text-align: center;
-            max-width: 450px;
-            padding: 30px;
-            background: rgba(15, 23, 42, 0.85);
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 520px;
+            padding: 35px;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
+        /* GIF 30% más grande */
         img {
             width: 100%;
-            max-width: 320px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            max-width: 416px; 
+            border-radius: 12px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
         h2 {
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-size: 20px;
+            margin-bottom: 10px;
             color: #38bdf8;
         }
         p {
-            font-size: 13px;
+            font-size: 14px;
             color: #94a3b8;
-            margin: 0;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+        /* Estilo para el cronómetro y contador */
+        .timer-box {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: monospace;
+            font-size: 16px;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
+        .timer-box span {
+            color: #ffffff;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Reemplaza con el nombre de tu archivo GIF -->
-        <img src="intro-logos.gif" alt="Cargando sistema...">
+        <!-- Reemplaza 'intro-logos.gif' con el nombre exacto de tu archivo GIF -->
+        <img src="intro-logos.gif" alt="Cargando sistema Miriam...">
         <h2>Despertando el sistema...</h2>
-        <p>Iniciando servidores de laboratorio y seguridad. Un momento por favor.</p>
+        <p>Esto puede demorar a veces hasta más de 1 minuto. Agradezco su paciencia mientras conectamos los servidores de laboratorio y seguridad.</p>
+        
+        <div class="timer-box">
+            ⏱️ Tiempo transcurrido: <span id="contadorSegundos">0</span> segundos
+        </div>
     </div>
 
     <script>
-        // ⚠️ URL de tu backend en Render
+        // ⚠️ URL real de tu backend en Render
         const BACKEND_URL = "https://miriam-backend-f9hh.onrender.com"; 
         
-        // ⚠️ Hacia dónde redirigir al despertar (tu mismo backend que sirve la app principal)
+        // ⚠️ Hacia dónde redirigir al despertar
         const APP_MAIN_URL = BACKEND_URL; 
 
+        // Cronómetro visible para el cliente
+        let segundos = 0;
+        const spanContador = document.getElementById('contadorSegundos');
+        
+        setInterval(() => {
+            segundos++;
+            spanContador.innerText = segundos;
+        }, 1000);
+
+        // Sondeo inteligente al backend
         async function checkServer() {
             try {
-                const response = await fetch(`${BACKEND_URL}/health`, { method: 'GET' });
+                const response = await fetch(`${BACKEND_URL}/api/health`, { method: 'GET' });
                 if (response.ok) {
-                    // ¡El servidor despertó! Redirigimos de inmediato al sistema
+                    // ¡Servidor despierto! Redirigimos de inmediato
                     window.location.href = APP_MAIN_URL;
                 }
             } catch (error) {
-                // Sigue durmiendo, seguimos mostrando el GIF de cortina
-                console.log("Servidor despertando...");
+                console.log("Servidor despertando... intento en curso.");
             }
         }
 
         // Comprobar cada 3 segundos
         setInterval(checkServer, 3000);
         
-        // Primera comprobación inmediata
+        // Primera comprobación inmediata al cargar
         checkServer();
     </script>
 </body>
