@@ -47,36 +47,36 @@
 <body>
 
     <div class="container">
-        <!-- Reemplaza 'intro-logos.gif' con el nombre exacto de tu archivo GIF -->
+        <!-- Reemplaza con el nombre de tu archivo GIF -->
         <img src="intro-logos.gif" alt="Cargando sistema...">
         <h2>Despertando el sistema...</h2>
         <p>Iniciando servidores de laboratorio y seguridad. Un momento por favor.</p>
     </div>
 
-<script>
-        // ⚠️ Tu URL real de Render (ejemplo)
+    <script>
+        // ⚠️ URL de tu backend en Render
         const BACKEND_URL = "https://miriam-backend-f9hh.onrender.com"; 
         
-        // ⚠️ Como tu backend sirve la app, apunta a la misma URL para entrar al sistema al despertar
+        // ⚠️ Hacia dónde redirigir al despertar (tu mismo backend que sirve la app principal)
         const APP_MAIN_URL = BACKEND_URL; 
 
         async function checkServer() {
             try {
                 const response = await fetch(`${BACKEND_URL}/health`, { method: 'GET' });
                 if (response.ok) {
-                    // El servidor despertó, redirigimos de inmediato al sistema principal
+                    // ¡El servidor despertó! Redirigimos de inmediato al sistema
                     window.location.href = APP_MAIN_URL;
                 }
             } catch (error) {
-                // El servidor sigue durmiendo, seguimos esperando con el GIF en pantalla
+                // Sigue durmiendo, seguimos mostrando el GIF de cortina
                 console.log("Servidor despertando...");
             }
         }
 
-        // Sondear el servidor cada 3 segundos
+        // Comprobar cada 3 segundos
         setInterval(checkServer, 3000);
         
-        // Primera comprobación al abrir la página
+        // Primera comprobación inmediata
         checkServer();
     </script>
 </body>
